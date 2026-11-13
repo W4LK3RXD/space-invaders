@@ -1,5 +1,3 @@
-// Space Defender game script
-
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreEl = document.getElementById('score');
@@ -7,31 +5,21 @@ const livesEl = document.getElementById('lives');
 const music = document.getElementById('backgroundMusic');
 const musicToggle = document.getElementById('musicToggle');
 
-// Keep the soundtrack quiet. Browsers require a user action before audio plays.
 music.volume = 0.12;
-musicToggle.addEventListener('click', async () => {
-    if (music.paused) {
-        try {
-            await music.play();
-            musicToggle.textContent = 'Mute Music';
-            musicToggle.setAttribute('aria-pressed', 'true');
-        } catch (error) {
-            musicToggle.textContent = 'Music Unavailable';
-            console.error('The background music could not be played:', error);
-        }
-    } else {
-        music.pause();
-        musicToggle.textContent = 'Enable Music';
-        musicToggle.setAttribute('aria-pressed', 'false');
-    }
-});
 
-// Game State
+function startBackgroundMusic() {
+    music.play().catch(() => {
+    });
+}
+
+startBackgroundMusic();
+document.addEventListener('pointerdown', startBackgroundMusic);
+document.addEventListener('keydown', startBackgroundMusic);
+
 let score = 0;
 let lives = 3;
 let gameOver = false;
 
-// Player Starship Object
 const player = {
     x: canvas.width / 2 - 20,
     y: canvas.height - 50,
@@ -41,22 +29,18 @@ const player = {
     dx: 0
 };
 
-// Projectiles & Enemies arrays
 const lasers = [];
 const invaders = [];
 
-// Invader Configuration
 const invaderRows = 3;
 const invaderCols = 7;
 const invaderWidth = 40;
 const invaderHeight = 25;
 let invaderSpeed = 2;
-let invaderDirection = 1; // 1 = Right, -1 = Left
+let invaderDirection = 1;
 
-// Key tracking
 const keys = { ArrowLeft: false, ArrowRight: false, Space: false };
 
-// Initialize Invaders Wave
 function createInvaders() {
     for (let row = 0; row < invaderRows; row++) {
         for (let col = 0; col < invaderCols; col++) {
@@ -71,7 +55,6 @@ function createInvaders() {
     }
 }
 
-// Keyboard Handlers
 document.addEventListener('keydown', (e) => {
     if (['ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
         e.preventDefault();
@@ -102,22 +85,18 @@ function fireLaser() {
     });
 }
 
-// Physics & State Updates
 function update() {
     if (gameOver) return;
 
-    // Move Player Ship
     if (keys.ArrowLeft) player.dx = -player.speed;
     else if (keys.ArrowRight) player.dx = player.speed;
     else player.dx = 0;
 
     player.x += player.dx;
 
-    // Boundary restrictions
     if (player.x < 0) player.x = 0;
     if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
 
-    // Update Lasers
     for (let i = lasers.length - 1; i >= 0; i--) {
         lasers[i].y -= lasers[i].speed;
         if (lasers[i].y < 0) {
@@ -125,7 +104,6 @@ function update() {
         }
     }
 
-    // Move Invaders
     let hitWall = false;
     invaders.forEach(invader => {
         if (!invader.alive) return;
@@ -143,7 +121,6 @@ function update() {
         });
     }
 
-    // Collision Detection
     lasers.forEach((laser, lIdx) => {
         invaders.forEach((invader) => {
             if (invader.alive &&
@@ -160,13 +137,11 @@ function update() {
         });
     });
 
-    // Win condition (All enemies destroyed)
     if (invaders.length > 0 && invaders.every(inv => !inv.alive)) {
         invaderSpeed += 0.5;
         createInvaders();
     }
 
-    // Lose condition (Enemies land)
     invaders.forEach(invader => {
         if (invader.alive && invader.y + invader.height >= player.y) {
             gameOver = true;
@@ -188,7 +163,7 @@ function resetGame() {
     livesEl.innerText = lives;
     createInvaders();
     playAgainBtn.disabled = true;
-    playAgainBtn.blur(); // Keep Spacebar from re-triggering the button
+    playAgainBtn.blur();
 }
 
 const playAgainBtn = document.getElementById('playAgain');
@@ -196,7 +171,6 @@ playAgainBtn.addEventListener('click', () => {
     if (gameOver) resetGame();
 });
 
-// Canvas Rendering Elements
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -210,7 +184,6 @@ function draw() {
         return;
     }
 
-    // Draw Player Starship
     ctx.fillStyle = '#00ffcc';
     ctx.beginPath();
     ctx.moveTo(player.x + player.width / 2, player.y);
@@ -219,13 +192,11 @@ function draw() {
     ctx.closePath();
     ctx.fill();
 
-    // Draw Lasers
     ctx.fillStyle = '#ff3366';
     lasers.forEach(laser => {
         ctx.fillRect(laser.x, laser.y, laser.width, laser.height);
     });
 
-    // Draw Invader Alien Starships
     ctx.fillStyle = '#ffcc00';
     invaders.forEach(invader => {
         if (!invader.alive) return;
@@ -237,13 +208,11 @@ function draw() {
     });
 }
 
-// Core Game Loop
 function loop() {
     update();
     draw();
     requestAnimationFrame(loop);
 }
 
-// Start Game Execution
 createInvaders();
 loop();
