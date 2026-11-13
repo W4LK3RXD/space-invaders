@@ -11,10 +11,8 @@
 <body>
     <main class="page-shell">
         <header class="page-header">
-            <p class="eyebrow">BRIDGER GALACTIC DEFENSE NETWORK</p>
             <h1>SPACE DEFENDER</h1>
-            <p class="creator">Created by Gerald Velasco</p>
-            <p class="tagline">The galaxy is counting on you. Defend the last frontier!</p>
+            <p class="creator">Gerald Velasco</p>
         </header>
 
         <section class="game-panel" aria-label="Space Defender game">
@@ -26,34 +24,30 @@
 
             <canvas id="gameCanvas" width="540" height="400"
                     aria-label="Space Defender game. Use the arrow keys to move and the spacebar to fire.">
-                Your browser does not support the HTML canvas element.
             </canvas>
 
             <div class="button-row">
                 <button id="playAgain" type="button" disabled>Play Again</button>
-                <button id="musicToggle" type="button" aria-pressed="false">Enable Music</button>
             </div>
 
-            <audio id="backgroundMusic" src="UFO Alien Invasion Scifi Music.mp3"
-                   loop preload="metadata"></audio>
+            <audio id="backgroundMusic"
+                    src="UFO Alien Invasion Scifi Music.mp3"
+                    autoplay loop preload="auto"></audio>
         </section>
 
         <section class="mission-briefing">
             <h2>MISSION BRIEFING</h2>
             <p>
-                Hostile alien craft have entered Earth's orbit. Pilot your defense
-                ship, clear each incoming wave, and protect the planet from invasion.
-                Every enemy craft you destroy earns 10 points.
+                Multiple alien hostiles have been spotted in space slowly heading towards your home planet.
+                Your job is to clear the incoming enemy waves, and protect your planet.
             </p>
             <ul class="instructions">
-                <li><kbd>←</kbd> and <kbd>→</kbd> Move your ship</li>
-                <li><kbd>Space</kbd> Fire a torpedo</li>
-                <li>Clear the entire formation to face the next wave</li>
+                <li><kbd>←</kbd> and <kbd>→</kbd> To move your ship</li>
+                <li><kbd>Space</kbd> To Fire</li>
             </ul>
-            <p class="music-note">Use “Enable Music” for optional low-volume sci-fi background music.</p>
         </section>
 
-        <footer class="page-footer">FLIGHT STATUS: ACTIVE <span aria-hidden="true">◆</span> GOOD LUCK, PILOT</footer>
+        <footer class="page-footer">Good Luck Pilot.</footer>
     </main>
 </body>
 </html>
