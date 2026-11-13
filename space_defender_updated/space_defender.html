@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Defend the galaxy in Space Defender, a retro sci-fi arcade game.">
+    <title>Space Defender | Sci-Fi Arcade</title>
+    <link rel="stylesheet" href="space_defender.css">
+    <script src="space_defender.js" defer></script>
+</head>
+<body>
+    <main class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow">BRIDGER GALACTIC DEFENSE NETWORK</p>
+            <h1>SPACE DEFENDER</h1>
+            <p class="creator">Created by Gerald Velasco</p>
+            <p class="tagline">The galaxy is counting on you. Defend the last frontier!</p>
+        </header>
+
+        <section class="game-panel" aria-label="Space Defender game">
+            <div class="scoreboard" aria-live="polite">
+                <span>SCORE: <strong id="score">0</strong></span>
+                <span class="score-divider">|</span>
+                <span>LIVES: <strong id="lives">3</strong></span>
+            </div>
+
+            <canvas id="gameCanvas" width="540" height="400"
+                    aria-label="Space Defender game. Use the arrow keys to move and the spacebar to fire.">
+                Your browser does not support the HTML canvas element.
+            </canvas>
+
+            <div class="button-row">
+                <button id="playAgain" type="button" disabled>Play Again</button>
+                <button id="musicToggle" type="button" aria-pressed="false">Enable Music</button>
+            </div>
+
+            <audio id="backgroundMusic" src="UFO Alien Invasion Scifi Music.mp3"
+                   loop preload="metadata"></audio>
+        </section>
+
+        <section class="mission-briefing">
+            <h2>MISSION BRIEFING</h2>
+            <p>
+                Hostile alien craft have entered Earth's orbit. Pilot your defense
+                ship, clear each incoming wave, and protect the planet from invasion.
+                Every enemy craft you destroy earns 10 points.
+            </p>
+            <ul class="instructions">
+                <li><kbd>←</kbd> and <kbd>→</kbd> Move your ship</li>
+                <li><kbd>Space</kbd> Fire a torpedo</li>
+                <li>Clear the entire formation to face the next wave</li>
+            </ul>
+            <p class="music-note">Use “Enable Music” for optional low-volume sci-fi background music.</p>
+        </section>
+
+        <footer class="page-footer">FLIGHT STATUS: ACTIVE <span aria-hidden="true">◆</span> GOOD LUCK, PILOT</footer>
+    </main>
+</body>
+</html>
